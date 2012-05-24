@@ -79,4 +79,8 @@ struct kgsl_device_platform_data {
 	unsigned int chipid;
 };
 
+/* Arbitrary defines for 8x50 devices using google clock naming / implementation */
+#define KGSL_CLK_GRP	0x00001000
+#define KGSL_CLK_IMEM	0x00010000
+
 #endif
