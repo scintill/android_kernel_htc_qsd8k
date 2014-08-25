@@ -21,10 +21,7 @@
 #include <linux/delay.h>
 
 #include <mach/socinfo.h>
-#include <mach/msm_bus_board.h>
 #include <mach/msm_bus.h>
-#include <mach/msm_dcvs.h>
-#include <mach/msm_dcvs_scm.h>
 
 #include "kgsl.h"
 #include "kgsl_pwrscale.h"
