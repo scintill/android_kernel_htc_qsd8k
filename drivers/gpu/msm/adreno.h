@@ -261,7 +261,9 @@ struct adreno_ft_data {
 					KGSL_FT_PAGEFAULT_GPUHALT_ENABLE)
 
 extern struct adreno_gpudev adreno_a2xx_gpudev;
+#ifdef CONFIG_MSM_ADRENO_3XX
 extern struct adreno_gpudev adreno_a3xx_gpudev;
+#endif
 
 /* A2XX register sets defined in adreno_a2xx.c */
 extern const unsigned int a200_registers[];

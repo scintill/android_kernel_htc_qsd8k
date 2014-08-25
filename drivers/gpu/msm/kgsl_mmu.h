@@ -193,8 +193,10 @@ struct kgsl_mmu {
 
 #include "kgsl_gpummu.h"
 
+#ifdef CONFIG_MSM_KGSL_IOMMU
 extern struct kgsl_mmu_ops iommu_ops;
 extern struct kgsl_mmu_pt_ops iommu_pt_ops;
+#endif
 
 struct kgsl_pagetable *kgsl_mmu_getpagetable(unsigned long name);
 void kgsl_mmu_putpagetable(struct kgsl_pagetable *pagetable);

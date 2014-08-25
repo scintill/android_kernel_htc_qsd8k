@@ -96,3 +96,13 @@ config MSM_KGSL_DISABLE_SHADOW_WRITES
 	bool "Disable register shadow writes for context switches"
 	default n
 	depends on MSM_KGSL
+
+config MSM_ADRENO_3XX
+	bool "Enable support for Adreno 3xx series"
+	default n
+	depends on MSM_KGSL
+
+config MSM_KGSL_IOMMU
+	bool "Enable IOMMU MMU backend"
+	default n
+	depends on MSM_KGSL

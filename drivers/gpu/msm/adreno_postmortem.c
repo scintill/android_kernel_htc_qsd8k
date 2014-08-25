@@ -23,7 +23,9 @@
 #include "kgsl_pwrctrl.h"
 
 #include "a2xx_reg.h"
+#ifdef CONFIG_MSM_ADRENO_3XX
 #include "a3xx_reg.h"
+#endif
 
 #define INVALID_RB_CMD 0xaaaaaaaa
 #define NUM_DWORDS_OF_RINGBUFFER_HISTORY 100
@@ -353,6 +355,7 @@ static void adreno_dump_fields(struct kgsl_device *device,
 	}
 }
 
+#ifdef CONFIG_MSM_ADRENO_3XX
 static void adreno_dump_a3xx(struct kgsl_device *device)
 {
 	unsigned int r1, r2, r3, rbbm_status;
@@ -498,6 +501,7 @@ static void adreno_dump_a3xx(struct kgsl_device *device)
 		adreno_dump_fields(device, "INT_SGNL=", ints, ARRAY_SIZE(ints));
 	}
 }
+#endif
 
 static void adreno_dump_a2xx(struct kgsl_device *device)
 {
@@ -705,8 +709,10 @@ int adreno_dump(struct kgsl_device *device, int manual)
 	if (device->pm_dump_enable) {
 		if (adreno_is_a2xx(adreno_dev))
 			adreno_dump_a2xx(device);
+#ifdef CONFIG_MSM_ADRENO_3XX
 		else if (adreno_is_a3xx(adreno_dev))
 			adreno_dump_a3xx(device);
+#endif
 	}
 
 	kgsl_regread(device, adreno_dev->gpudev->reg_rbbm_status, &rbbm_status);
@@ -890,6 +896,7 @@ int adreno_dump(struct kgsl_device *device, int manual)
 		else if (adreno_is_a225(adreno_dev))
 			adreno_dump_regs(device, a225_registers,
 				a225_registers_count);
+#ifdef CONFIG_MSM_ADRENO_3XX
 		else if (adreno_is_a3xx(adreno_dev)) {
 			adreno_dump_regs(device, a3xx_registers,
 					a3xx_registers_count);
@@ -898,6 +905,7 @@ int adreno_dump(struct kgsl_device *device, int manual)
 				adreno_dump_regs(device, a330_registers,
 					a330_registers_count);
 		}
+#endif
 	}
 
 error_vfree:

@@ -241,8 +241,10 @@ void ion_carveout_heap_destroy(struct ion_heap *);
 struct ion_heap *ion_iommu_heap_create(struct ion_platform_heap *);
 void ion_iommu_heap_destroy(struct ion_heap *);
 
+#ifdef CONFIG_ION_CP_HEAP
 struct ion_heap *ion_cp_heap_create(struct ion_platform_heap *);
 void ion_cp_heap_destroy(struct ion_heap *);
+#endif
 
 struct ion_heap *ion_reusable_heap_create(struct ion_platform_heap *);
 void ion_reusable_heap_destroy(struct ion_heap *);
@@ -308,8 +310,10 @@ int ion_do_cache_op(struct ion_client *client, struct ion_handle *handle,
 			void *uaddr, unsigned long offset, unsigned long len,
 			unsigned int cmd);
 
+#ifdef CONFIG_ION_CP_HEAP
 void ion_cp_heap_get_base(struct ion_heap *heap, unsigned long *base,
 			unsigned long *size);
+#endif
 
 void ion_mem_map_show(struct ion_heap *heap);
 
