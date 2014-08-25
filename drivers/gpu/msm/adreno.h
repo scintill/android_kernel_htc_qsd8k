@@ -17,7 +17,9 @@
 #include "adreno_drawctxt.h"
 #include "adreno_ringbuffer.h"
 #include "kgsl_iommu.h"
+#ifdef CONFIG_MSM_OCMEM
 #include <mach/ocmem.h>
+#endif
 
 #define DEVICE_3D_NAME "kgsl-3d"
 #define DEVICE_3D0_NAME "kgsl-3d0"
@@ -112,8 +114,10 @@ struct adreno_device {
 	unsigned int long_ib_ts;
 	unsigned int ft_pf_policy;
 	unsigned int gpulist_index;
+#ifdef CONFIG_MSM_OCMEM
 	struct ocmem_buf *ocmem_hdl;
 	unsigned int ocmem_base;
+#endif
 	unsigned int gpu_cycles;
 	struct kgsl_memdesc pwron_fixup;
 	unsigned int pwron_fixup_dwords;

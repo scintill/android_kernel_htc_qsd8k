@@ -1052,6 +1052,7 @@ static struct platform_device_id adreno_id_table[] = {
 
 MODULE_DEVICE_TABLE(platform, adreno_id_table);
 
+#ifdef CONFIG_OF
 static struct of_device_id adreno_match_table[] = {
 	{ .compatible = "qcom,kgsl-3d0", },
 	{}
@@ -1466,6 +1467,7 @@ err:
 
 	return ret;
 }
+#endif
 
 #ifdef CONFIG_MSM_OCMEM
 static int
@@ -1520,6 +1522,7 @@ adreno_probe(struct platform_device *pdev)
 	struct kgsl_device *device;
 	struct adreno_device *adreno_dev;
 	int status = -EINVAL;
+#ifdef CONFIG_OF
 	bool is_dt;
 
 	is_dt = of_match_device(adreno_match_table, &pdev->dev);
@@ -1529,6 +1532,7 @@ adreno_probe(struct platform_device *pdev)
 		if (status)
 			goto error_return;
 	}
+#endif
 
 	device = (struct kgsl_device *)pdev->id_entry->driver_data;
 	adreno_dev = ADRENO_DEVICE(device);
@@ -3969,7 +3973,9 @@ static struct platform_driver adreno_platform_driver = {
 		.owner = THIS_MODULE,
 		.name = DEVICE_3D_NAME,
 		.pm = &kgsl_pm_ops,
+#ifdef CONFIG_OF
 		.of_match_table = adreno_match_table,
+#endif
 	}
 };
 

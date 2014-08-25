@@ -412,6 +412,7 @@ static int memtype_to_ion_memtype[] = {
 	[MEMTYPE_EBI1] = ION_EBI_TYPE,
 };
 
+#ifdef CONFIG_OF
 static void msm_ion_get_heap_align(struct device_node *node,
 				   struct ion_platform_heap *heap)
 {
@@ -565,6 +566,7 @@ free_heaps:
 	free_pdata(pdata);
 	return ERR_PTR(ret);
 }
+#endif
 
 static int check_vaddr_bounds(unsigned long start, unsigned long end)
 {
@@ -668,6 +670,7 @@ static int msm_ion_probe(struct platform_device *pdev)
 	unsigned int pdata_needs_to_be_freed;
 	int err = -1;
 	int i;
+#ifdef CONFIG_OF
 	if (pdev->dev.of_node) {
 		pdata = msm_ion_parse_dt(pdev->dev.of_node);
 		if (IS_ERR(pdata)) {
@@ -676,9 +679,12 @@ static int msm_ion_probe(struct platform_device *pdev)
 		}
 		pdata_needs_to_be_freed = 1;
 	} else {
+#endif
 		pdata = pdev->dev.platform_data;
 		pdata_needs_to_be_freed = 0;
+#ifdef CONFIG_OF
 	}
+#endif
 
 	num_heaps = pdata->nr;
 
@@ -748,18 +754,22 @@ static int msm_ion_remove(struct platform_device *pdev)
 	return 0;
 }
 
+#ifdef CONFIG_OF
 static struct of_device_id msm_ion_match_table[] = {
 	{.compatible = ION_COMPAT_STR},
 	{},
 };
 EXPORT_COMPAT(ION_COMPAT_MEM_RESERVE_STR);
+#endif
 
 static struct platform_driver msm_ion_driver = {
 	.probe = msm_ion_probe,
 	.remove = msm_ion_remove,
 	.driver = {
 		.name = "ion-msm",
+#ifdef CONFIG_OF
 		.of_match_table = msm_ion_match_table,
+#endif
 	},
 };
 

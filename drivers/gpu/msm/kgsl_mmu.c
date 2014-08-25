@@ -950,15 +950,19 @@ void kgsl_mmu_set_mmutype(char *mmutype)
 	kgsl_mmu_type =
 		cpu_is_apq8064() ? KGSL_MMU_TYPE_NONE : KGSL_MMU_TYPE_GPU;
 
+#ifdef CONFIG_IOMMU_API
 	/* Use the IOMMU if it is found */
 	if (iommu_present(&platform_bus_type))
 		kgsl_mmu_type = KGSL_MMU_TYPE_IOMMU;
+#endif
 
 	if (mmutype && !strncmp(mmutype, "gpummu", 6))
 		kgsl_mmu_type = KGSL_MMU_TYPE_GPU;
+#ifdef CONFIG_IOMMU_API
 	if (iommu_present(&platform_bus_type) && mmutype &&
 	    !strncmp(mmutype, "iommu", 5))
 		kgsl_mmu_type = KGSL_MMU_TYPE_IOMMU;
+#endif
 	if (mmutype && !strncmp(mmutype, "nommu", 5))
 		kgsl_mmu_type = KGSL_MMU_TYPE_NONE;
 }
